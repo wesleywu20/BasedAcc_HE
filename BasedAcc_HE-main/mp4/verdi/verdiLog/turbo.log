@@ -1,5 +1,0 @@
-Command Line: /software/Synopsys-2021_x86_64/verdi/R-2020.12-SP1-1/platform/LINUXAMD64/bin/Novas -ssf /home/arpanr2/mp4/sim/dump.fsdb
-uname(Linux eceb-2022-39.ews.illinois.edu 4.18.0-425.13.1.el8_7.x86_64 #1 SMP Tue Feb 21 04:20:52 EST 2023 x86_64)
-[MessageBox] The KDB has been updated by other processes. Reload the KDB to update it; otherwise, you may get unexpected results.
-Failed to bind ID for line(64) of file(/home/arpanr2/mp4/cpu/execution/accel_res_station.sv)
-au time 1915.578154 23.102539 15.197317 delta 339537920 339537920 total 833351680 833351680

@@ -1,0 +1,129 @@
+module I_fetch
+import rv32i_types::*; 
+(
+    input logic clk,
+    input logic rst, 
+    input logic mem_resp,
+    input logic queue_ready,
+    input logic br_en,
+    input  instr_struct decoded_update, // after decoding
+    input logic get_next_pc,
+
+    output logic [31:0]cache_pc,current_pc,
+    output logic i_mem_read
+
+    //input [31:0] updated_target, // from Arpan
+    //input [2:0]branch_ID_i, // from Arpan
+    //input [31:0]branch_info,  // from Arpan
+
+    //output prediction,
+    //output [2:0]branch_ID_o
+    //output [31:0]target,
+);
+
+logic [31:0] update_pc;
+logic btb_load,load_pc;
+logic btb_hit;
+logic branch_was_taken;
+logic [31:0] address, pcmux_out, branch_pc, pc_out, branch_target;
+
+assign current_pc = pc_out; 
+assign cache_pc = pcmux_out;
+assign load_pc = queue_ready;//queue is ready to take an 
+assign branch_ID_o = pc_out[2:0];
+
+always_comb begin
+if(get_next_pc)begin 
+        unique case (br_en)
+                1'b0: pcmux_out = pc_out + 4;
+                //1'b1: pcmux_out = target; // alu_out essentially
+        default: ;
+        endcase
+end 
+else begin
+        pcmux_out = pc_out;
+
+end
+
+
+
+//if(cache_pc == 60)
+//      i_mem_read = '1;        
+//else if((pcmux_out == pc_out) && cache_pc != 60)
+//      i_mem_read = '0;
+//else 
+//      i_mem_read = '1; 
+end
+
+always_ff @(negedge clk)
+begin
+    /* Assignment of next state on clock edge */
+        if (rst) 
+                i_mem_read <= '1;
+        else if(mem_resp)
+                i_mem_read <= '0;
+        else if (pc_out != pcmux_out)
+                i_mem_read <= '1;
+        else 
+                i_mem_read <= '0;
+end
+
+//assign i_mem_read = '1; 
+
+//always_comb begin
+//      unique case (branch_info)
+//              31'b0: branch_was_taken = 1'b0;
+//              31'b1: branch_was_taken = 1'b1;
+//              default: jalr_addr = branch_info;
+//      endcase
+//end
+
+pc_register pc_register(
+    .clk(clk),
+    .rst(rst),
+    .load(load_pc),
+    .in(pcmux_out),
+    .out(pc_out)
+);
+
+// btb logic 
+//always comb begin
+//    btb_load = 1'b0;
+//    if ((decoded_update.opcode == op_br) || (decoded_update.opcode == op_jal) || //(decoded_update.opcode == op_jalr)) begin
+//        btb_load = 1'b1;
+//        updated_pc = decoded_update.pc;
+//    end else
+//        btb_load = 1'b0;
+//end
+
+//btb btb (
+//    .clk(clk),
+//    .rst(rst),
+//    .cur_pc(pc_out),
+//    .br_id(branch_ID_i),
+//    .updated_pc(updated_pc),
+//    .updated_target(updated_target)
+//    .load_btb(btb_load),
+//    .target(branch_pc),
+    //.btb_hit(btb_hit)
+//);
+
+//assign prediction = b_pred_out;
+
+//always comb begin
+//    b_pred_out = 1'b1;
+//    if (b_pred_out == 1'b1)
+//        target = branch_pc;
+//    else
+//        target = pc_out + 4;
+//end
+//predictor predictor (
+//     .clk(clk),
+//     .rst(rst),
+//     .current_pc(pc_out),
+//     .current_instr(decoded_update),
+//     .branch_was_taken(branch_was_taken),
+//     .prediction(b_pred_out)
+//);
+
+endmodule : I_fetch

@@ -1,0 +1,52 @@
+
+a.out:     file format elf32-littleriscv
+
+
+Disassembly of section .text.swinit:
+
+00000060 <_start>:
+  60:	00008317          	auipc	x6,0x8
+  64:	09030313          	addi	x6,x6,144 # 80f0 <_data_vma_end>
+  68:	00008397          	auipc	x7,0x8
+  6c:	08838393          	addi	x7,x7,136 # 80f0 <_data_vma_end>
+  70:	00730863          	beq	x6,x7,80 <_setup>
+
+00000074 <_initbss_loop>:
+  74:	00032023          	sw	x0,0(x6)
+  78:	00430313          	addi	x6,x6,4
+  7c:	fe736ce3          	bltu	x6,x7,74 <_initbss_loop>
+
+00000080 <_setup>:
+  80:	f0000117          	auipc	x2,0xf0000
+  84:	f8010113          	addi	x2,x2,-128 # f0000000 <_stack_top+0x0>
+  88:	00010433          	add	x8,x2,x0
+  8c:	00000097          	auipc	x1,0x0
+  90:	04c080e7          	jalr	76(x1) # d8 <_text_vma_start>
+  94:	00100293          	li	x5,1
+  98:	00000317          	auipc	x6,0x0
+  9c:	03030313          	addi	x6,x6,48 # c8 <tohost>
+  a0:	00532023          	sw	x5,0(x6)
+  a4:	00032223          	sw	x0,4(x6)
+  a8:	00000097          	auipc	x1,0x0
+  ac:	010080e7          	jalr	16(x1) # b8 <_fini>
+  b0:	00000013          	nop
+  b4:	00000013          	nop
+
+Disassembly of section .text.swfin:
+
+000000b8 <_fini>:
+  b8:	00000063          	beqz	x0,b8 <_fini>
+  bc:	00000013          	nop
+  c0:	00000013          	nop
+
+Disassembly of section .text:
+
+000000d8 <_text_vma_start>:
+  d8:	00000517          	auipc	x10,0x0
+  dc:	01850513          	addi	x10,x10,24 # f0 <_text_vma_end>
+  e0:	00002597          	auipc	x11,0x2
+  e4:	01058593          	addi	x11,x11,16 # 20f0 <B1>
+  e8:	ffff                	0xffff
+  ea:	ffff                	0xffff
+  ec:	00008067          	ret
+Assembled  and wrote memory contents to /home/arpanr2/mp4/bin_new/../sim/memory.lst

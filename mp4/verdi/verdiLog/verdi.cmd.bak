@@ -1,0 +1,26 @@
+simSetSimulator "-vcssv" -exec "/home/arpanr2/mp4/sim/simv" -args
+debImport "-dbdir" "/home/arpanr2/mp4/sim/simv.daidir"
+debLoadSimResult /home/arpanr2/mp4/sim/dump.fsdb
+wvCreateWindow
+srcHBSelect "mp4_tb.dut" -win $_nTrace1
+srcSetScope "mp4_tb.dut" -delim "." -win $_nTrace1
+srcHBSelect "mp4_tb.dut" -win $_nTrace1
+srcHBSelect "mp4_tb.dut.tomasulo0" -win $_nTrace1
+srcSetScope "mp4_tb.dut.tomasulo0" -delim "." -win $_nTrace1
+srcHBSelect "mp4_tb.dut.tomasulo0" -win $_nTrace1
+srcDeselectAll -win $_nTrace1
+srcSelect -signal "opcode_i" -line 13 -pos 1 -win $_nTrace1
+srcAddSelectedToWave -clipboard -win $_nTrace1
+wvDrop -win $_nWave2
+wvSetCursor -win $_nWave2 75173074.826087 -snap {("G1" 0)}
+wvSetCursor -win $_nWave2 25700196.521739 -snap {("G1" 1)}
+wvZoom -win $_nWave2 0.000000 3212524.565217
+wvSetCursor -win $_nWave2 1848257.307997 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 1838512.541874 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 1838512.541874 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 1838512.541874 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 1841760.797248 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 1841760.797248 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 1838512.541874 -snap {("G1" 1)}
+wvSetCursor -win $_nWave2 1848257.307997 -snap {("G1" 1)}
+debExit

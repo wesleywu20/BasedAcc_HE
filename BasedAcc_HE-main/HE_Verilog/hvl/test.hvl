@@ -1,0 +1,6 @@
+module test();
+
+       initial begin
+         $display("Test");
+        end
+endmodule : test
